@@ -1,3 +1,4 @@
+use crate::rleaf_sys::{cleaf_init, cleaf_finalize};
 use std::sync::atomic::{AtomicU32, Ordering};
 static LEAF_INSTANCES: AtomicU32 = AtomicU32::new(0);
 
@@ -21,10 +22,4 @@ pub fn remove_leaf_instance(){
         unsafe { cleaf_finalize() };
         debug!("[rleaf] Finalizing cleaf");
     }
-}
-
-#[link(name = "cleaf")]
-extern "C" {
-    fn cleaf_init(level: u32);
-    fn cleaf_finalize();
 }
