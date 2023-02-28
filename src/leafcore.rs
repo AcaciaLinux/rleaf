@@ -28,7 +28,7 @@ impl<'a> Leafcore<'a>{
         crate::cleaf::add_leaf_instance();
 
         let newcore = Leafcore {
-            cleafcore : unsafe{ cleafcore_new() }
+            cleafcore : unsafe{ cleafcore_new().as_mut().expect("Failed to create reference from cleaf instance") }
         };
 
         return newcore;
@@ -44,7 +44,7 @@ impl<'a> Leafcore<'a>{
     pub fn a_update(&mut self) -> Result<(), LeafError> {
         match unsafe { cleafcore_a_update(self.cleafcore) }{
             0 => Ok(()),
-            _ => Err(LeafError::new_from_last(self))
+            _ => Err(LeafError::new_from_last(&self.cleafcore))
         }
     }
 
@@ -73,7 +73,7 @@ impl<'a> Leafcore<'a>{
 
         match unsafe { cleafcore_a_install(self.cleafcore, c_string_ptrs.len() as u32,c_string_ptrs_ptr) }{
             0 => Ok(()),
-            _ => Err(LeafError::new_from_last(self))
+            _ => Err(LeafError::new_from_last(&self.cleafcore))
         }
     }
 
@@ -102,7 +102,7 @@ impl<'a> Leafcore<'a>{
 
         match unsafe { cleafcore_a_installLocal(self.cleafcore, c_string_ptrs.len() as u32,c_string_ptrs_ptr) }{
             0 => Ok(()),
-            _ => Err(LeafError::new_from_last(self))
+            _ => Err(LeafError::new_from_last(&self.cleafcore))
         }
     }
 
@@ -131,7 +131,7 @@ impl<'a> Leafcore<'a>{
 
         match unsafe { cleafcore_a_upgrade(self.cleafcore, c_string_ptrs.len() as u32,c_string_ptrs_ptr) }{
             0 => Ok(()),
-            _ => Err(LeafError::new_from_last(self))
+            _ => Err(LeafError::new_from_last(&self.cleafcore))
         }
     }
 
