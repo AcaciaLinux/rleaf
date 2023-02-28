@@ -1,3 +1,4 @@
+use crate::rleaf_sys::*;
 use std::ffi::*;
 use crate::error::LeafError;
 
@@ -134,14 +135,4 @@ impl Leafcore{
         }
     }
 
-}
-
-#[link(name = "cleaf")]
-extern "C" {
-    fn cleafcore_new() -> *mut c_void;
-    fn cleafcore_delete(core: *mut c_void);
-    fn cleafcore_a_update(core: *mut c_void) -> i8;
-    fn cleafcore_a_install(core: *mut c_void, l_pkgs: u32, pkgs: *const *const c_char) -> i8;
-    fn cleafcore_a_installLocal(core: *mut c_void, l_pkgs: u32, pkgs: *const *const c_char) -> i8;
-    fn cleafcore_a_upgrade(core: *mut c_void, l_pkgs: u32, pkgs: *const *const c_char) -> i8;
 }
