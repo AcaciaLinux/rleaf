@@ -8,10 +8,10 @@ pub struct LeafError{
 }
 impl LeafError{
     /// Creates a new LeafError instance from the last error set in the cleaf API
-    pub fn new_from_last(core: &mut Leafcore) -> LeafError{
+    pub fn new_from_last(core: &cleafcore) -> LeafError{
         let e = LeafError { 
-            code: unsafe { cleafcore_getError(core.cleafcore) },
-            message: crate::util::from_c_str(unsafe { cleafcore_getErrorString(core.cleafcore) } )
+            code: unsafe { cleafcore_getError(core) },
+            message: crate::util::from_c_str(unsafe { cleafcore_getErrorString(core) })
         };
         trace!("[rleaf] New LeafError: code: {}, message: \"{}\"", e.code, e.message);
         e
