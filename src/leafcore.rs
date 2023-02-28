@@ -3,12 +3,12 @@ use std::ffi::*;
 use crate::error::LeafError;
 
 /// A struct representing a Leafcore instance
-pub struct Leafcore{
+pub struct Leafcore<'a>{
     /// The raw cleaf pointer
-    pub cleafcore: *mut c_void
+    pub cleafcore: &'a mut cleafcore
 }
 
-impl Drop for Leafcore{
+impl<'a> Drop for Leafcore<'a>{
     fn drop(&mut self) {
         unsafe {
             cleafcore_delete(self.cleafcore);
@@ -17,14 +17,14 @@ impl Drop for Leafcore{
     }
 }
 
-impl Leafcore{
+impl<'a> Leafcore<'a>{
     /// Creates a new Leafcore instance
     /// # Examples
     /// ```
     /// use rleaf::leafcore::Leafcore;
     /// let leaf = Leafcore::new();
     /// ```
-    pub fn new() -> Leafcore{
+    pub fn new() -> Leafcore<'a>{
         crate::cleaf::add_leaf_instance();
 
         let newcore = Leafcore {
