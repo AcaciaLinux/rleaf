@@ -1,6 +1,5 @@
+use crate::rleaf_sys::{cleafcore, cleafcore_getError, cleafcore_getErrorString};
 use std::{error::Error, fmt};
-use std::ffi::{c_void, c_char};
-use crate::leafcore::*;
 
 #[derive(Debug)]
 pub struct LeafError{
@@ -23,10 +22,4 @@ impl fmt::Display for LeafError{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Leaf error: '{}', code: {}", self.message, self.code)
     }
-}
-
-#[link(name = "cleaf")]
-extern "C" {
-    fn cleafcore_getError(core: *mut c_void) -> u16;
-    fn cleafcore_getErrorString(core: *mut c_void) -> *mut c_char;
 }
