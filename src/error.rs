@@ -44,3 +44,44 @@ impl fmt::Display for LeafCoreError {
         write!(f, "Leaf error: '{}', code: {}", self.message, self.code)
     }
 }
+
+impl LeafConfigError {
+    pub fn new(class: LeafConfigErrorClass) -> LeafConfigError {
+        let e = LeafConfigError { class: class };
+        trace!("[cleaf] New LeafConfigError: {}", e.class.to_string());
+        e
+    }
+
+    pub fn new_from_u8(code: u8) -> LeafConfigError {
+        let e = LeafConfigError {
+            class: LeafConfigErrorClass::new_from_u8(code),
+        };
+        trace!("[cleaf] New LeafConfigError: {}", e.class.to_string());
+        e
+    }
+}
+
+impl LeafConfigErrorClass {
+    pub fn new_from_u8(code: u8) -> LeafConfigErrorClass {
+        match code {
+            0 => Self::OK,
+            255 => Self::NOTINIT,
+            254 => Self::NOCORE,
+            253 => Self::RO_CONF,
+            252 => Self::INV_CONF,
+            _ => Self::UNKNOWN,
+        }
+    }
+
+    pub fn to_string(&self) -> String {
+        match self {
+            Self::OK => "Ok",
+            Self::NOTINIT => "Not initialized",
+            Self::NOCORE => "No core supplied",
+            Self::RO_CONF => "Tried to write read only config",
+            Self::INV_CONF => "Invalid config",
+            Self::UNKNOWN => "Unknown",
+        }
+        .to_owned()
+    }
+}
