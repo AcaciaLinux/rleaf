@@ -28,9 +28,13 @@ impl LeafCoreError {
     pub fn new_from_last(core: &cleafcore) -> LeafCoreError {
         let e = LeafCoreError {
             code: unsafe { cleafcore_getError(core) },
-            message: crate::util::from_c_str(unsafe { cleafcore_getErrorString(core) })
+            message: crate::util::from_c_str(unsafe { cleafcore_getErrorString(core) }),
         };
-        trace!("[rleaf] New LeafError: code: {}, message: \"{}\"", e.code, e.message);
+        trace!(
+            "[rleaf] New LeafError: code: {}, message: \"{}\"",
+            e.code,
+            e.message
+        );
         e
     }
 }
