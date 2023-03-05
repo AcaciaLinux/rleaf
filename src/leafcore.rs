@@ -57,8 +57,7 @@ impl<'a> Leafcore<'a> {
     /// let mut leaf = Leafcore::new();
     /// leaf.a_install(&vec!["myPackage".to_string()]);
     /// ```
-    pub fn a_install(&mut self, pkgs: &Vec<String>) -> Result<(), LeafError>{
-
+    pub fn a_install(&mut self, pkgs: &Vec<String>) -> Result<(), LeafCoreError> {
         let c_strings: Vec<CString> = pkgs
             .iter()
             .map(|s| CString::new(s.as_str()).unwrap())
@@ -73,7 +72,7 @@ impl<'a> Leafcore<'a> {
 
         match unsafe { cleafcore_a_install(self.cleafcore, c_string_ptrs.len() as u32,c_string_ptrs_ptr) }{
             0 => Ok(()),
-            _ => Err(LeafError::new_from_last(&self.cleafcore))
+            _ => Err(LeafCoreError::new_from_last(&self.cleafcore)),
         }
     }
 
@@ -86,8 +85,7 @@ impl<'a> Leafcore<'a> {
     /// let mut leaf = Leafcore::new();
     /// leaf.a_install_local(&vec!["/pat/to/myPackage.lfpk".to_string()]);
     /// ```
-    pub fn a_install_local(&mut self, pkgs: &Vec<String>) -> Result<(), LeafError>{
-
+    pub fn a_install_local(&mut self, pkgs: &Vec<String>) -> Result<(), LeafCoreError> {
         let c_strings: Vec<CString> = pkgs
             .iter()
             .map(|s| CString::new(s.as_str()).unwrap())
@@ -102,7 +100,7 @@ impl<'a> Leafcore<'a> {
 
         match unsafe { cleafcore_a_installLocal(self.cleafcore, c_string_ptrs.len() as u32,c_string_ptrs_ptr) }{
             0 => Ok(()),
-            _ => Err(LeafError::new_from_last(&self.cleafcore))
+            _ => Err(LeafCoreError::new_from_last(&self.cleafcore)),
         }
     }
 
@@ -115,8 +113,7 @@ impl<'a> Leafcore<'a> {
     /// let mut leaf = Leafcore::new();
     /// leaf.a_upgrade(&vec!["myPackage".to_string()]);
     /// ```
-    pub fn a_upgrade(&mut self, pkgs: &Vec<String>) -> Result<(), LeafError>{
-
+    pub fn a_upgrade(&mut self, pkgs: &Vec<String>) -> Result<(), LeafCoreError> {
         let c_strings: Vec<CString> = pkgs
             .iter()
             .map(|s| CString::new(s.as_str()).unwrap())
@@ -131,7 +128,7 @@ impl<'a> Leafcore<'a> {
 
         match unsafe { cleafcore_a_upgrade(self.cleafcore, c_string_ptrs.len() as u32,c_string_ptrs_ptr) }{
             0 => Ok(()),
-            _ => Err(LeafError::new_from_last(&self.cleafcore))
+            _ => Err(LeafCoreError::new_from_last(&self.cleafcore)),
         }
     }
 
