@@ -1,6 +1,10 @@
 use crate::rleaf_sys::{cleafcore, cleafcore_getError, cleafcore_getErrorString};
 use std::{error::Error, fmt};
 
+pub trait LeafError{
+    fn what() -> String;
+}
+
 #[allow(non_camel_case_types)]
 #[derive(Debug)]
 pub enum LeafConfigErrorClass {
@@ -58,6 +62,12 @@ impl LeafConfigError {
         };
         trace!("[cleaf] New LeafConfigError: {}", e.class.to_string());
         e
+    }
+}
+impl Error for LeafConfigError {}
+impl fmt::Display for LeafConfigError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Leaf config error: {}", self.class.to_string())
     }
 }
 
