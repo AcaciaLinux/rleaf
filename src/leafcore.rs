@@ -61,10 +61,10 @@ impl<'a> Leafcore<'a> {
     /// let mut leaf = Leafcore::new();
     /// leaf.a_install(&vec!["myPackage".to_string()]);
     /// ```
-    pub fn a_install(&mut self, pkgs: &Vec<String>) -> Result<(), LeafCoreError> {
+    pub fn a_install(&mut self, pkgs: &Vec<&str>) -> Result<(), LeafCoreError> {
         let c_strings: Vec<CString> = pkgs
             .iter()
-            .map(|s| CString::new(s.as_str()).unwrap())
+            .map(|s| CString::new(s.to_string()).unwrap())
             .collect();
 
         let c_string_ptrs: Vec<*const c_char> = c_strings.iter().map(|s| s.as_ptr()).collect();
@@ -92,10 +92,10 @@ impl<'a> Leafcore<'a> {
     /// let mut leaf = Leafcore::new();
     /// leaf.a_install_local(&vec!["/pat/to/myPackage.lfpk".to_string()]);
     /// ```
-    pub fn a_install_local(&mut self, pkgs: &Vec<String>) -> Result<(), LeafCoreError> {
+    pub fn a_install_local(&mut self, pkgs: &Vec<&str>) -> Result<(), LeafCoreError> {
         let c_strings: Vec<CString> = pkgs
             .iter()
-            .map(|s| CString::new(s.as_str()).unwrap())
+            .map(|s| CString::new(s.to_string()).unwrap())
             .collect();
 
         let c_string_ptrs: Vec<*const c_char> = c_strings.iter().map(|s| s.as_ptr()).collect();
@@ -123,10 +123,10 @@ impl<'a> Leafcore<'a> {
     /// let mut leaf = Leafcore::new();
     /// leaf.a_upgrade(&vec!["myPackage".to_string()]);
     /// ```
-    pub fn a_upgrade(&mut self, pkgs: &Vec<String>) -> Result<(), LeafCoreError> {
+    pub fn a_upgrade(&mut self, pkgs: &Vec<&str>) -> Result<(), LeafCoreError> {
         let c_strings: Vec<CString> = pkgs
             .iter()
-            .map(|s| CString::new(s.as_str()).unwrap())
+            .map(|s| CString::new(s.to_string()).unwrap())
             .collect();
 
         let c_string_ptrs: Vec<*const c_char> = c_strings.iter().map(|s| s.as_ptr()).collect();
