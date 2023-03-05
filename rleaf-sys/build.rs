@@ -4,8 +4,12 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    // Tell cargo to link against libcleaf
-    println!("cargo:rustc-link-arg=/usr/lib/libcleaf.so");
+    // Tell cargo to look for shared libraries in the specified directory
+    println!("cargo:rustc-link-search=/usr/lib/");
+
+    // Tell cargo to tell rustc to link against cleaf shared library.
+    println!("cargo:rustc-link-lib=cleaf");
+
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=wrapper.h");
